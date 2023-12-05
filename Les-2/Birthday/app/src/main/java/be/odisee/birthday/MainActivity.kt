@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -46,7 +44,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun BirthdayImage(modifier: Modifier = Modifier) {
-    Box {
+    Box(modifier = modifier) {
         val painter = painterResource(id = R.drawable.androidparty)
 
         Image(
@@ -55,6 +53,28 @@ fun BirthdayImage(modifier: Modifier = Modifier) {
             contentScale = ContentScale.Crop,
             alpha = 0.5f
         )
+
+        /*        Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxSize()
+                ) {
+                    Text(
+                        text = stringResource(R.string.happy_birthday_sam),
+                        fontSize = 64.sp,
+                        lineHeight = 64.sp,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.from_label),
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .padding(end = 16.dp, top = 16.dp)
+                    )
+                }*/
 
         BirthDayText(
             modifier = Modifier
@@ -82,7 +102,8 @@ fun BirthDayText(modifier: Modifier = Modifier) {
 
         Text(
             text = stringResource(id = R.string.from_label),
-            modifier = Modifier.align(Alignment.End)
+            modifier = Modifier
+                .align(Alignment.End)
                 .padding(end = 16.dp, top = 16.dp)
         )
     }
