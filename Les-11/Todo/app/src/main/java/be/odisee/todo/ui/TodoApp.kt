@@ -36,12 +36,10 @@ fun TodoApp(modifier: Modifier = Modifier) {
     val overviewViewModel = viewModel<OverviewViewModel>()
 
     val backStackEntry by navController.currentBackStackEntryAsState()
-
+    val currentScreen = Screens.valueOf(backStackEntry?.destination?.route ?: Screens.Overview.name)
     Scaffold(topBar = {
-        if (backStackEntry?.destination?.route == Screens.Overview.name)
-            TodoTopAppBar(overviewViewModel) else {
-            TodoTopAppBar()
-        }
+        TodoTopAppBar(overviewViewModel, currentScreen)
+
     }, floatingActionButton = {
         if (backStackEntry?.destination?.route == Screens.Overview.name) {
             FloatingActionButton(onClick = { navController.navigate(Screens.AddItem.name) }) {
@@ -63,8 +61,8 @@ fun TodoApp(modifier: Modifier = Modifier) {
             }
             composable(Screens.AddItem.name) {
                 AddScreen(navigateBack = {
-//                    navController.popBackStack()
-                    navController.navigateUp()
+                    navController.popBackStack()
+//                    navController.navigateUp()
                     overviewViewModel.reload()
                 })
             }
@@ -75,14 +73,14 @@ fun TodoApp(modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodoTopAppBar(overviewViewModel: OverviewViewModel? = null) {
+fun TodoTopAppBar(overviewViewModel: OverviewViewModel? = null, currentScreen: Screens) {
     TopAppBar(title = {
         Text("Todo")
     }, actions = {
-        if (overviewViewModel != null) {
+        if (currentScreen == Screens.Overview) {
 
             IconButton(onClick = {
-                overviewViewModel.reload()
+                overviewViewModel?.reload()
             }) {
                 Icon(
                     imageVector = Icons.Filled.Refresh,
