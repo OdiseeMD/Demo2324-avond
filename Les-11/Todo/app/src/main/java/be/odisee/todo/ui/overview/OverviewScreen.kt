@@ -36,12 +36,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import be.odisee.todo.R
 import be.odisee.todo.model.Todo
 import be.odisee.todo.ui.theme.TodoTheme
 
 @Composable
-fun OverviewScreen(viewmodel: OverviewViewModel, modifier: Modifier = Modifier) {
+fun OverviewScreen(viewmodel: OverviewViewModel = viewModel(), modifier: Modifier = Modifier) {
 
     val state by viewmodel.state.collectAsState()
 

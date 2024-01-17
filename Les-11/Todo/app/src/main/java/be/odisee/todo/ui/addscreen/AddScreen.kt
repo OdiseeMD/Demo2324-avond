@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -27,13 +28,17 @@ import be.odisee.todo.R
 import be.odisee.todo.ui.theme.TodoTheme
 
 @Composable
-fun AddScreen(modifier: Modifier = Modifier, navigateBack: ()-> Unit) {
+fun AddScreen(modifier: Modifier = Modifier, navigateBack: () -> Unit) {
     val viewmodel = viewModel<AddViewModel>()
     val state by viewmodel.state.collectAsState()
 
-    if(state.apiStatus == CreateTodoApiStatus.Success){
-        navigateBack()
+
+    if (state.apiStatus == CreateTodoApiStatus.Success) {
+        LaunchedEffect(Unit) {
+            navigateBack()
+        }
     }
+
 
     Column(
         modifier
@@ -41,10 +46,10 @@ fun AddScreen(modifier: Modifier = Modifier, navigateBack: ()-> Unit) {
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp, alignment = Alignment.Top)
     ) {
-    val apiStatus = state.apiStatus
-    if(apiStatus is CreateTodoApiStatus.Error){
-        Text(text = apiStatus.errorMessage, color = MaterialTheme.colorScheme.error)
-    }
+        val apiStatus = state.apiStatus
+        if (apiStatus is CreateTodoApiStatus.Error) {
+            Text(text = apiStatus.errorMessage, color = MaterialTheme.colorScheme.error)
+        }
         TextField(
             value = state.title,
             onValueChange = {
